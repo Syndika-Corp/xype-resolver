@@ -107,10 +107,13 @@ export class BnsResolver {
       const expiration = await this._bnsRegistry.ttl(node);
       const currentTimestampInSeconds = this.getCurrentTimestamp();
 
-      // Domain is not valid if it is expired
-      if (expiration == null || expiration < currentTimestampInSeconds) {
-        return null;
-      }
+      /**
+       * Ommit this for now
+       * // Domain is not valid if it is expired
+       * if (expiration == null || expiration < currentTimestampInSeconds) {
+       *   return null;
+       * }
+       */
 
       // Get the resolver address
       const resolver = await this._bnsRegistry.resolver(node);
