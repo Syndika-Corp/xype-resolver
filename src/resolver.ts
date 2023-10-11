@@ -16,16 +16,23 @@ import type { Web3Connection } from './types/web3-connection.type';
 
 export class BnsResolver {
   /**
-   * Initiate Multicall class with specified connection mechanism
+   * Initiate BnsResolver class
    *
-   * @param connection Connection instance for Multicall service
-   * @returns New Multicall instance
+   * @param _provider JsonRpcProvider provider
+   * @param _bnsRegistry BnsRegistry smart-contract
+   * @returns New BnsResolver instance
    */
   constructor(
     private _provider: JsonRpcProvider,
     private _bnsRegistry: Contract
   ) {}
 
+  /**
+   * Creates the BnsResolver instance with specified Web3Connection type
+   *
+   * @param connection A string representing RPC URL or the JsonRpcProvider object
+   * @returns New BnsResolver instance
+   */
   public static async init(connection: Web3Connection): Promise<BnsResolver> {
     const provider =
       connection instanceof JsonRpcProvider
@@ -41,6 +48,12 @@ export class BnsResolver {
     return new BnsResolver(provider, bnsRegistry);
   }
 
+  /**
+   * Resolves the name matching it with the corresponding Ethereum address registered in Bloprime Name Service
+   *
+   * @param name The alias name e.g. 'alex.sxt'
+   * @returns Returns the Ethereum address or null if the alias expired or doesn't exist
+   */
   public async resolveName(name: string): Promise<string | null> {
     // Example of supported format: alex.sxt
     if (name.split(DOMAIN_SEPARATOR).length != 2) {
@@ -51,10 +64,11 @@ export class BnsResolver {
     const tld = name.split(DOMAIN_SEPARATOR)[1];
     try {
       const node = namehash(name);
+      const parentNameHash = namehash(tld);
 
       // Get the name and TLD expiration
-      const nameExpiration = await this._bnsRegistry.ttl(node);
-      const tldExpiration = await this._bnsRegistry.ttl(namehash(tld));
+      const nameExpiration = await this._bnsRegistry.expiration(node);
+      const tldExpiration = await this._bnsRegistry.expiration(parentNameHash);
       const currentTimestampInSeconds = this.getCurrentTimestamp();
 
       // Domain is not valid if it or it's tld are expired
@@ -67,8 +81,8 @@ export class BnsResolver {
         return null;
       }
 
-      // Get the resolver address
-      const resolver = await this._bnsRegistry.resolver(node);
+      // Get the resolver address from TLD
+      const resolver = await this._bnsRegistry.resolver(parentNameHash);
       if (resolver == null || resolver === ZeroAddress) {
         return null;
       }
@@ -99,21 +113,18 @@ export class BnsResolver {
     return null;
   }
 
+  /**
+   * This function performs reverse resolution returning the primary alias of the given address.
+   * It also performs the reverse check
+   *
+   * @param address The Ethereum address e.g. '0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6'
+   * @returns Returns the alias or null
+   */
   public async lookupAddress(address: string): Promise<string | null> {
     address = getAddress(address);
     const node = namehash(address.substring(2).toLowerCase() + '.addr.reverse');
     try {
-      // Get the expiration
-      const expiration = await this._bnsRegistry.ttl(node);
-      const currentTimestampInSeconds = this.getCurrentTimestamp();
-
-      /**
-       * Ommit this for now
-       * // Domain is not valid if it is expired
-       * if (expiration == null || expiration < currentTimestampInSeconds) {
-       *   return null;
-       * }
-       */
+      // @note The expiration will be checked in reverse check
 
       // Get the resolver address
       const resolver = await this._bnsRegistry.resolver(node);

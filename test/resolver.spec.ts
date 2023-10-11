@@ -12,18 +12,18 @@ describe('BnsResolver', () => {
 
   describe('Common tests', () => {
     it('should create an instance of BnsResolver', async () => {
-      const provider = new JsonRpcProvider(getEnvVar('PUBLIC_RPC'));
+      const provider = new JsonRpcProvider(PUBLIC_RPC_NODES[0]);
 
       await expect(BnsResolver.init('invalid')).rejects.toThrow();
 
       expect((bnsResolver = await BnsResolver.init(provider)));
-      expect((bnsResolver = await BnsResolver.init(getEnvVar('PUBLIC_RPC'))));
+      expect((bnsResolver = await BnsResolver.init(PUBLIC_RPC_NODES[0])));
     });
   });
 
   describe('resolveName', () => {
     it('resolveName: test1.sxt - success resolution', async () => {
-      const addr = await bnsResolver.resolveName('test1.sxt');
+      const addr = await bnsResolver.resolveName('test0.sxt');
       expect(addr).toEqual('0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6');
     });
 
@@ -32,15 +32,20 @@ describe('BnsResolver', () => {
       expect(addr).toEqual(null);
     });
 
+    it('resolveName: invalid name format', async () => {
+      const addr = await bnsResolver.resolveName('test2.sxt.eth');
+      expect(addr).toEqual(null);
+    });
+
     // add TLD expired test
   });
 
-  describe('resolveName', () => {
+  describe('lookupAddress', () => {
     it('lookupAddress: 0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6 - success resolution', async () => {
       const addr = await bnsResolver.lookupAddress(
         '0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6'
       );
-      expect(addr).toEqual('test1.sxt');
+      expect(addr).toEqual('test0.sxt');
     });
 
     it('lookupAddress: 0xf2EA5Fd6538EAb3B0466f1b1A447C742d8b30eFe - expired', async () => {

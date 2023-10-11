@@ -1,12 +1,12 @@
 export const BNS_REGISTRY_ADDRESS = {
-  1: '0x13FCAb43cd9deA934528350eAd71754949b73303',
-  5: '0x13FCAb43cd9deA934528350eAd71754949b73303',
-  11155111: '0x13FCAb43cd9deA934528350eAd71754949b73303',
+  1: '0x77A10a68f1BC651a0CD965F696B4C32b7202b016',
+  5: '0x77A10a68f1BC651a0CD965F696B4C32b7202b016',
+  11155111: '0x77A10a68f1BC651a0CD965F696B4C32b7202b016',
 } as Record<number, string>;
 
 export const REGISTRY_ABI = [
   'function resolver(bytes32) view returns (address)',
-  'function ttl(bytes32) view returns (uint64)',
+  'function expiration(bytes32) view returns (uint256)',
 ];
 
 export const RESOLVER_ABI = [

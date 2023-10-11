@@ -1,7 +1,7 @@
 {
   "name": "bns-resolver",
-  "version": "0.0.0-development",
-  "description": "A template for creating npm packages using TypeScript and VSCode",
+  "version": "1.1.0",
+  "description": "The Blockprime Name Resolver Library",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
