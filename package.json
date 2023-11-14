@@ -1,6 +1,6 @@
 {
   "name": "bns-resolver",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "The Blockprime Name Resolver Library",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
@@ -59,7 +59,7 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^3.4.0",
-    "ethers": "^6.7.1",
+    "ethers": "^5.6.8",
     "husky": "^6.0.0",
     "jest": "^27.2.0",
     "lint-staged": "^13.2.1",

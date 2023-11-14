@@ -1,3 +1,3 @@
-import type { JsonRpcProvider } from 'ethers';
+import type { ethers } from 'ethers';
 
-export type Web3Connection = JsonRpcProvider | string;
+export type Web3Connection = ethers.providers.JsonRpcProvider | string;

@@ -1,11 +1,4 @@
-import {
-  Contract,
-  JsonRpcProvider,
-  ZeroAddress,
-  getAddress,
-  namehash,
-  isError,
-} from 'ethers';
+import { ethers, Contract, utils, constants } from 'ethers';
 import {
   BNS_REGISTRY_ADDRESS,
   DOMAIN_SEPARATOR,
@@ -23,7 +16,7 @@ export class BnsResolver {
    * @returns New BnsResolver instance
    */
   constructor(
-    private _provider: JsonRpcProvider,
+    private _provider: ethers.providers.JsonRpcProvider,
     private _bnsRegistry: Contract
   ) {}
 
@@ -35,9 +28,9 @@ export class BnsResolver {
    */
   public static async init(connection: Web3Connection): Promise<BnsResolver> {
     const provider =
-      connection instanceof JsonRpcProvider
+      connection instanceof ethers.providers.JsonRpcProvider
         ? connection
-        : new JsonRpcProvider(connection);
+        : new ethers.providers.JsonRpcProvider(connection);
 
     // add network support check
     const bnsRegistry = new Contract(
@@ -63,11 +56,13 @@ export class BnsResolver {
     // Get the Top Level Domain
     const tld = name.split(DOMAIN_SEPARATOR)[1];
     try {
-      const node = namehash(name);
-      const parentNameHash = namehash(tld);
+      const node = utils.namehash(name);
+      const parentNameHash = utils.namehash(tld);
 
       // Get the name and TLD expiration
+      // eslint-disable-next-line
       const nameExpiration = await this._bnsRegistry.expiration(node);
+      // eslint-disable-next-line
       const tldExpiration = await this._bnsRegistry.expiration(parentNameHash);
       const currentTimestampInSeconds = this.getCurrentTimestamp();
 
@@ -82,8 +77,9 @@ export class BnsResolver {
       }
 
       // Get the resolver address from TLD
+      // eslint-disable-next-line
       const resolver = await this._bnsRegistry.resolver(parentNameHash);
-      if (resolver == null || resolver === ZeroAddress) {
+      if (resolver == null || resolver === constants.AddressZero) {
         return null;
       }
       // Setup Resolver contract
@@ -94,23 +90,17 @@ export class BnsResolver {
       );
 
       // Resolve the address
-      const address: string = getAddress(await resolverContract.addr(node));
-      if (address == null || address === ZeroAddress) {
+      const address: string = utils.getAddress(
+        // eslint-disable-next-line
+        await resolverContract.addr(node)
+      );
+      if (address == null || address === constants.AddressZero) {
         return null;
       }
       return address;
-    } catch (error) {
-      // No data was returned
-      if (isError(error, 'BAD_DATA') && error.value === '0x') {
-        return null;
-      }
-      // Something reverted
-      if (isError(error, 'CALL_EXCEPTION')) {
-        return null;
-      }
-      throw error;
+    } catch {
+      return null;
     }
-    return null;
   }
 
   /**
@@ -121,14 +111,17 @@ export class BnsResolver {
    * @returns Returns the alias or null
    */
   public async lookupAddress(address: string): Promise<string | null> {
-    address = getAddress(address);
-    const node = namehash(address.substring(2).toLowerCase() + '.addr.reverse');
+    address = utils.getAddress(address);
+    const node = utils.namehash(
+      address.substring(2).toLowerCase() + '.addr.reverse'
+    );
     try {
       // @note The expiration will be checked in reverse check
 
       // Get the resolver address
+      // eslint-disable-next-line
       const resolver = await this._bnsRegistry.resolver(node);
-      if (resolver == null || resolver === ZeroAddress) {
+      if (resolver == null || resolver === constants.AddressZero) {
         return null;
       }
 
@@ -140,6 +133,7 @@ export class BnsResolver {
       );
 
       // Get domain name
+      // eslint-disable-next-line
       const name: string = await resolverContract.name(node);
 
       // Perform the reverse check
@@ -148,18 +142,9 @@ export class BnsResolver {
         return null;
       }
       return name;
-    } catch (error) {
-      // No data was returned
-      if (isError(error, 'BAD_DATA') && error.value === '0x') {
-        return null;
-      }
-      // Something reverted
-      if (isError(error, 'CALL_EXCEPTION')) {
-        return null;
-      }
-      throw error;
+    } catch {
+      return null;
     }
-    return null;
   }
 
   private getCurrentTimestamp(): number {

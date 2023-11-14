@@ -1,4 +1,4 @@
-import { JsonRpcProvider } from 'ethers';
+import { ethers } from 'ethers';
 import { BnsResolver } from '../src';
 import { getEnvVar } from '../utils/env-validation';
 
@@ -12,7 +12,9 @@ describe('BnsResolver', () => {
 
   describe('Common tests', () => {
     it('should create an instance of BnsResolver', async () => {
-      const provider = new JsonRpcProvider(PUBLIC_RPC_NODES[0]);
+      const provider = new ethers.providers.JsonRpcProvider(
+        PUBLIC_RPC_NODES[0]
+      );
 
       await expect(BnsResolver.init('invalid')).rejects.toThrow();
 

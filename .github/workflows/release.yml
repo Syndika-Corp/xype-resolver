@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - ethers-v5
   workflow_call:
     secrets:
       NPM_TOKEN:
