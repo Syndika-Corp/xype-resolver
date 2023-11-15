@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import { BnsResolver } from '../src';
 import { getEnvVar } from '../utils/env-validation';
+import { getAddress } from 'ethers/lib/utils';
 
 describe('BnsResolver', () => {
   let bnsResolver: BnsResolver;
@@ -25,8 +26,10 @@ describe('BnsResolver', () => {
 
   describe('resolveName', () => {
     it('resolveName: test1.sxt - success resolution', async () => {
-      const addr = await bnsResolver.resolveName('test0.sxt');
-      expect(addr).toEqual('0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6');
+      const addr = await bnsResolver.resolveName('max.sxt');
+      expect(addr).toEqual(
+        getAddress('0x772b207659fbf9b33f5bc698694931946948054e')
+      );
     });
 
     it('resolveName: test2.sxt - name expired', async () => {
@@ -45,9 +48,9 @@ describe('BnsResolver', () => {
   describe('lookupAddress', () => {
     it('lookupAddress: 0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6 - success resolution', async () => {
       const addr = await bnsResolver.lookupAddress(
-        '0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6'
+        '0x772b207659fbf9b33f5bc698694931946948054e'
       );
-      expect(addr).toEqual('test0.sxt');
+      expect(addr).toEqual('max.sxt');
     });
 
     it('lookupAddress: 0xf2EA5Fd6538EAb3B0466f1b1A447C742d8b30eFe - expired', async () => {
