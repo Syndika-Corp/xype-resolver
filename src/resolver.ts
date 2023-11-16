@@ -2,6 +2,7 @@ import { ethers, Contract, utils, constants } from 'ethers';
 import {
   BNS_REGISTRY_ADDRESS,
   DOMAIN_SEPARATOR,
+  REGISTRAR_ABI,
   REGISTRY_ABI,
   RESOLVER_ABI,
 } from './constants';
@@ -66,10 +67,29 @@ export class BnsResolver {
       const tldExpiration = await this._bnsRegistry.expiration(parentNameHash);
       const currentTimestampInSeconds = this.getCurrentTimestamp();
 
+      // Get the registrar address
+      // eslint-disable-next-line
+      const registrar = await this._bnsRegistry.owner(parentNameHash);
+      if (registrar == null || registrar === constants.AddressZero) {
+        return null;
+      }
+
+      // Setup Registrar contract
+      const registrarContract = new Contract(
+        registrar,
+        REGISTRAR_ABI,
+        this._provider
+      );
+
+      // Check if domain is paused
+      // eslint-disable-next-line
+      const isPaused = await registrarContract.isDomainPaused();
+
       // Domain is not valid if it or it's tld are expired
       if (
         nameExpiration == null ||
         tldExpiration == null ||
+        isPaused ||
         nameExpiration < currentTimestampInSeconds ||
         tldExpiration < currentTimestampInSeconds
       ) {
