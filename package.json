@@ -1,6 +1,6 @@
 {
   "name": "bns-resolver",
-  "version": "2.1.1",
+  "version": "2.2.0",
   "description": "The Blockprime Name Resolver Library",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
