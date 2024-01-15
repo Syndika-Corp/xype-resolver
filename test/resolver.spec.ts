@@ -26,14 +26,14 @@ describe('BnsResolver', () => {
 
   describe('resolveName', () => {
     it('resolveName: test1.sxt - success resolution', async () => {
-      const addr = await bnsResolver.resolveName('max.sxt');
+      const addr = await bnsResolver.resolveName('ion.eps');
       expect(addr).toEqual(
-        getAddress('0x772b207659fbf9b33f5bc698694931946948054e')
+        getAddress('0xb305c1f2200a17E0502416B1746aB88C9B5C449f')
       );
     });
 
     it('resolveName: test2.sxt - name expired', async () => {
-      const addr = await bnsResolver.resolveName('test2.sxt');
+      const addr = await bnsResolver.resolveName('abc2.sxt');
       expect(addr).toEqual(null);
     });
 
@@ -46,11 +46,11 @@ describe('BnsResolver', () => {
   });
 
   describe('lookupAddress', () => {
-    it('lookupAddress: 0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6 - success resolution', async () => {
+    it('lookupAddress: 0xb305c1f2200a17E0502416B1746aB88C9B5C449f - success resolution', async () => {
       const addr = await bnsResolver.lookupAddress(
-        '0x772b207659fbf9b33f5bc698694931946948054e'
+        '0xb305c1f2200a17E0502416B1746aB88C9B5C449f'
       );
-      expect(addr).toEqual('max.sxt');
+      expect(addr).toEqual('ion.eps');
     });
 
     it('lookupAddress: 0xf2EA5Fd6538EAb3B0466f1b1A447C742d8b30eFe - expired', async () => {
@@ -60,6 +60,4 @@ describe('BnsResolver', () => {
       expect(addr).toEqual(null);
     });
   });
-
-  //@todo Finish tests when contracts are ready
 });
