@@ -56,7 +56,7 @@ npm run test
 [build-url]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/release.yml
 [downloads-img]: https://img.shields.io/npm/dt/xype-resolver
 [downloads-url]: https://www.npmtrends.com/xype-resolver
-[npm-img]: https://img.shields.io/npm/v/bns-resolver/latest.svg
+[npm-img]: https://img.shields.io/npm/v/xype-resolver/latest.svg
 [npm-img-ethersV5]: https://img.shields.io/npm/v/xype-resolver/ethers-v5.svg
 [npm-url]: https://www.npmjs.com/package/xype-resolver
 [npm-img-ethersV5]: https://img.shields.io/npm/v/xype-resolver
