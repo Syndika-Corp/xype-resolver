@@ -1,9 +1,9 @@
-/** BnsResolver */
-export { BnsResolver } from './resolver';
+/** XypeResolver */
+export { XypeResolver } from './resolver';
 
-/** BnsResolver */
+/** XypeResolver */
 export {
-  BNS_REGISTRY_ADDRESS,
+  XYPE_REGISTRY_ADDRESS,
   REGISTRY_ABI,
   RESOLVER_ABI,
   DOMAIN_SEPARATOR,

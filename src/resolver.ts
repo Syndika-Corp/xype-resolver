@@ -7,45 +7,45 @@ import {
   isError,
 } from 'ethers';
 import {
-  BNS_REGISTRY_ADDRESS,
+  XYPE_REGISTRY_ADDRESS,
   DOMAIN_SEPARATOR,
   REGISTRY_ABI,
   RESOLVER_ABI,
 } from './constants';
 import type { Web3Connection } from './types/web3-connection.type';
 
-export class BnsResolver {
+export class XypeResolver {
   /**
-   * Initiate BnsResolver class
+   * Initiate XypeResolver class
    *
    * @param _provider JsonRpcProvider provider
-   * @param _bnsRegistry BnsRegistry smart-contract
-   * @returns New BnsResolver instance
+   * @param _xypeRegistry XypeRegistry smart-contract
+   * @returns New XypeResolver instance
    */
   constructor(
     private _provider: JsonRpcProvider,
-    private _bnsRegistry: Contract
+    private _xypeRegistry: Contract
   ) {}
 
   /**
-   * Creates the BnsResolver instance with specified Web3Connection type
+   * Creates the XypeResolver instance with specified Web3Connection type
    *
    * @param connection A string representing RPC URL or the JsonRpcProvider object
-   * @returns New BnsResolver instance
+   * @returns New XypeResolver instance
    */
-  public static async init(connection: Web3Connection): Promise<BnsResolver> {
+  public static async init(connection: Web3Connection): Promise<XypeResolver> {
     const provider =
       connection instanceof JsonRpcProvider
         ? connection
         : new JsonRpcProvider(connection);
 
     // add network support check
-    const bnsRegistry = new Contract(
-      BNS_REGISTRY_ADDRESS[Number((await provider.getNetwork()).chainId)],
+    const xypeRegistry = new Contract(
+      XYPE_REGISTRY_ADDRESS[Number((await provider.getNetwork()).chainId)],
       REGISTRY_ABI,
       provider
     );
-    return new BnsResolver(provider, bnsRegistry);
+    return new XypeResolver(provider, xypeRegistry);
   }
 
   /**
@@ -67,8 +67,8 @@ export class BnsResolver {
       const parentNameHash = namehash(tld);
 
       // Get the name and TLD expiration
-      const nameExpiration = await this._bnsRegistry.expiration(node);
-      const tldExpiration = await this._bnsRegistry.expiration(parentNameHash);
+      const nameExpiration = await this._xypeRegistry.expiration(node);
+      const tldExpiration = await this._xypeRegistry.expiration(parentNameHash);
       const currentTimestampInSeconds = this.getCurrentTimestamp();
 
       // Domain is not valid if it or it's tld are expired
@@ -82,7 +82,7 @@ export class BnsResolver {
       }
 
       // Get the resolver address from TLD
-      const resolver = await this._bnsRegistry.resolver(parentNameHash);
+      const resolver = await this._xypeRegistry.resolver(parentNameHash);
       if (resolver == null || resolver === ZeroAddress) {
         return null;
       }
@@ -127,7 +127,7 @@ export class BnsResolver {
       // @note The expiration will be checked in reverse check
 
       // Get the resolver address
-      const resolver = await this._bnsRegistry.resolver(node);
+      const resolver = await this._xypeRegistry.resolver(node);
       if (resolver == null || resolver === ZeroAddress) {
         return null;
       }

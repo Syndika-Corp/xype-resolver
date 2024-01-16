@@ -1,7 +1,7 @@
 {
-  "name": "bns-resolver",
-  "version": "1.2.0",
-  "description": "The Blockprime Name Resolver Library",
+  "name": "xype-resolver",
+  "version": "0.0.0",
+  "description": "The Xype Name Resolver Library",
   "main": "./lib/index.js",
   "types": "./lib/index.d.ts",
   "files": [
@@ -20,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Syndika-Corp/bns-resolver.git"
+    "url": "git+https://github.com/Syndika-Corp/xype-resolver.git"
   },
   "license": "MIT",
   "author": {
@@ -43,9 +43,9 @@
     "codecov"
   ],
   "bugs": {
-    "url": "https://github.com/Syndika-Corp/bns-resolver/issues"
+    "url": "https://github.com/Syndika-Corp/xype-resolver/issues"
   },
-  "homepage": "https://github.com/Syndika-Corp/bns-resolver#readme",
+  "homepage": "https://github.com/Syndika-Corp/xype-resolver#readme",
   "devDependencies": {
     "@ryansonshine/commitizen": "^4.2.8",
     "@ryansonshine/cz-conventional-changelog": "^3.3.4",
