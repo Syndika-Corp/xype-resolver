@@ -11,7 +11,7 @@ describe('XypeResolver', () => {
   ];
 
   describe('Common tests', () => {
-    it('should create an instance of BnsResolver', async () => {
+    it('should create an instance of XypeResolver', async () => {
       const provider = new ethers.providers.JsonRpcProvider(
         PUBLIC_RPC_NODES[0]
       );
