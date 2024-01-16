@@ -1,6 +1,6 @@
 import { ethers, Contract, utils, constants } from 'ethers';
 import {
-  BNS_REGISTRY_ADDRESS,
+  XYPE_REGISTRY_ADDRESS,
   DOMAIN_SEPARATOR,
   REGISTRAR_ABI,
   REGISTRY_ABI,
@@ -8,38 +8,38 @@ import {
 } from './constants';
 import type { Web3Connection } from './types/web3-connection.type';
 
-export class BnsResolver {
+export class XypeResolver {
   /**
-   * Initiate BnsResolver class
+   * Initiate XypeResolver class
    *
    * @param _provider JsonRpcProvider provider
-   * @param _bnsRegistry BnsRegistry smart-contract
-   * @returns New BnsResolver instance
+   * @param _xypeRegistry XypeRegistry smart-contract
+   * @returns New XypeResolver instance
    */
   constructor(
     private _provider: ethers.providers.JsonRpcProvider,
-    private _bnsRegistry: Contract
+    private _xypeRegistry: Contract
   ) {}
 
   /**
-   * Creates the BnsResolver instance with specified Web3Connection type
+   * Creates the XypeResolver instance with specified Web3Connection type
    *
    * @param connection A string representing RPC URL or the JsonRpcProvider object
-   * @returns New BnsResolver instance
+   * @returns New XypeResolver instance
    */
-  public static async init(connection: Web3Connection): Promise<BnsResolver> {
+  public static async init(connection: Web3Connection): Promise<XypeResolver> {
     const provider =
       connection instanceof ethers.providers.JsonRpcProvider
         ? connection
         : new ethers.providers.JsonRpcProvider(connection);
 
     // add network support check
-    const bnsRegistry = new Contract(
-      BNS_REGISTRY_ADDRESS[Number((await provider.getNetwork()).chainId)],
+    const xypeRegistry = new Contract(
+      XYPE_REGISTRY_ADDRESS[Number((await provider.getNetwork()).chainId)],
       REGISTRY_ABI,
       provider
     );
-    return new BnsResolver(provider, bnsRegistry);
+    return new XypeResolver(provider, xypeRegistry);
   }
 
   /**
@@ -62,14 +62,14 @@ export class BnsResolver {
 
       // Get the name and TLD expiration
       // eslint-disable-next-line
-      const nameExpiration = await this._bnsRegistry.expiration(node);
+      const nameExpiration = await this._xypeRegistry.expiration(node);
       // eslint-disable-next-line
-      const tldExpiration = await this._bnsRegistry.expiration(parentNameHash);
+      const tldExpiration = await this._xypeRegistry.expiration(parentNameHash);
       const currentTimestampInSeconds = this.getCurrentTimestamp();
 
       // Get the registrar address
       // eslint-disable-next-line
-      const registrar = await this._bnsRegistry.owner(parentNameHash);
+      const registrar = await this._xypeRegistry.owner(parentNameHash);
       if (registrar == null || registrar === constants.AddressZero) {
         return null;
       }
@@ -98,7 +98,7 @@ export class BnsResolver {
 
       // Get the resolver address from TLD
       // eslint-disable-next-line
-      const resolver = await this._bnsRegistry.resolver(parentNameHash);
+      const resolver = await this._xypeRegistry.resolver(parentNameHash);
       if (resolver == null || resolver === constants.AddressZero) {
         return null;
       }
@@ -140,7 +140,7 @@ export class BnsResolver {
 
       // Get the resolver address
       // eslint-disable-next-line
-      const resolver = await this._bnsRegistry.resolver(node);
+      const resolver = await this._xypeRegistry.resolver(node);
       if (resolver == null || resolver === constants.AddressZero) {
         return null;
       }

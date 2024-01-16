@@ -1,7 +1,9 @@
+<h1 align="center" style="border-bottom: none;">🚀🚀 xype-resolver 🚀🚀</h1>
+<h3 align="center">XYPE Domain Name Resolver Library</h3>
 
-# bns-resolver
 
-[![npm package][npm-img]][npm-url]
+[![npm latest version][npm-img]][npm-url]
+[![npm ethers-v5 version][npm-img-ethersV5]][npm-url]
 [![Build Status][build-img]][build-url]
 [![Downloads][downloads-img]][downloads-url]
 [![Issues][issues-img]][issues-url]
@@ -9,12 +11,11 @@
 [![Commitizen Friendly][commitizen-img]][commitizen-url]
 [![Semantic Release][semantic-release-img]][semantic-release-url]
 
-> The Blockprime Name Resolver Library
 
 ## Install
 
 ```bash
-npm install bns-resolver
+npm install xype-resolver
 ```
 
 ## Usage
@@ -22,22 +23,27 @@ npm install bns-resolver
 ### Import and initialization
 
 ```ts
-import { BnsResolver } from "bns-resolver";
+import { XypeResolver } from 'xype-resolver';
 
-const bnsResolver = await BnsResolver.init(RPC_NODE);
+const xypeResolver = await XypeResolver.init(RPC_NODE);
 ```
+
 ### Name resolution
 
-- This function should be used when the input is a human readable name or alias like `alex.sxt`. The sample code: 
+- This function should be used when the input is a human readable name or alias like `alex.sxt`. The sample code:
+
 ```ts
-const addr = await bnsResolver.resolveName('alex.sxt');
+const addr = await xypeResolver.resolveName('alex.sxt');
 ```
 
 ### Lookup the address
 
-- This function performs reverse resolution returning the primary alias of the given address. Typically it is used when the Ethereum account is connected to the dApp. The sample code: 
+- This function performs reverse resolution returning the primary alias of the given address. Typically it is used when the Ethereum account is connected to the dApp. The sample code:
+
 ```ts
-const addr = await bnsResolver.lookupAddress('0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6');
+const addr = await xypeResolver.lookupAddress(
+  '0x084B5B4967b6EaB4EeDc628C12c7E63292cD5FC6'
+);
 ```
 
 ## Running tests
@@ -46,17 +52,20 @@ const addr = await bnsResolver.lookupAddress('0x084B5B4967b6EaB4EeDc628C12c7E632
 npm run test
 ```
 
-[build-img]:https://github.com/Syndika-Corp/bns-resolver/actions/workflows/release.yml/badge.svg
-[build-url]:https://github.com/Syndika-Corp/bns-resolver/actions/workflows/release.yml
-[downloads-img]:https://img.shields.io/npm/dt/bns-resolver
-[downloads-url]:https://www.npmtrends.com/bns-resolver
-[npm-img]:https://img.shields.io/npm/v/bns-resolver
-[npm-url]:https://www.npmjs.com/package/bns-resolver
-[issues-img]:https://img.shields.io/github/issues/Syndika-Corp/bns-resolver
-[issues-url]:https://github.com/Syndika-Corp/bns-resolver/issues
-[codecov-img]:https://codecov.io/gh/Syndika-Corp/bns-resolver/branch/main/graph/badge.svg
-[codecov-url]:https://codecov.io/gh/Syndika-Corp/bns-resolver
-[semantic-release-img]:https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
-[semantic-release-url]:https://github.com/semantic-release/semantic-release
-[commitizen-img]:https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
-[commitizen-url]:http://commitizen.github.io/cz-cli/
+[build-img]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/release.yml/badge.svg
+[build-url]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/release.yml
+[downloads-img]: https://img.shields.io/npm/dt/xype-resolver
+[downloads-url]: https://www.npmtrends.com/xype-resolver
+[npm-img]: https://img.shields.io/npm/v/bns-resolver/latest.svg
+[npm-img-ethersV5]: https://img.shields.io/npm/v/xype-resolver/ethers-v5.svg
+[npm-url]: https://www.npmjs.com/package/xype-resolver
+[npm-img-ethersV5]: https://img.shields.io/npm/v/xype-resolver
+[npm-url-ethersV5]: https://www.npmjs.com/package/xype-resolver
+[issues-img]: https://img.shields.io/github/issues/Syndika-Corp/xype-resolver
+[issues-url]: https://github.com/Syndika-Corp/xype-resolver/issues
+[codecov-img]: https://codecov.io/gh/Syndika-Corp/xype-resolver/branch/main/graph/badge.svg
+[codecov-url]: https://codecov.io/gh/Syndika-Corp/xype-resolver
+[semantic-release-img]: https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg
+[semantic-release-url]: https://github.com/semantic-release/semantic-release
+[commitizen-img]: https://img.shields.io/badge/commitizen-friendly-brightgreen.svg
+[commitizen-url]: http://commitizen.github.io/cz-cli/
