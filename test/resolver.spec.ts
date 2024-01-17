@@ -23,9 +23,9 @@ describe('XypeResolver', () => {
 
   describe('resolveName', () => {
     it('resolveName: test1.sxt - success resolution', async () => {
-      const addr = await xypeResolver.resolveName('ion.eps');
+      const addr = await xypeResolver.resolveName('xxx.sxt');
       expect(addr).toEqual(
-        getAddress('0xb305c1f2200a17E0502416B1746aB88C9B5C449f')
+        getAddress('0xc46DA945f66EBe2E55f49EF9e401ec9eA7C3eC61')
       );
     });
 
@@ -45,9 +45,9 @@ describe('XypeResolver', () => {
   describe('lookupAddress', () => {
     it('lookupAddress: 0xb305c1f2200a17E0502416B1746aB88C9B5C449f - success resolution', async () => {
       const addr = await xypeResolver.lookupAddress(
-        '0xb305c1f2200a17E0502416B1746aB88C9B5C449f'
+        '0xc46DA945f66EBe2E55f49EF9e401ec9eA7C3eC61'
       );
-      expect(addr).toEqual('ion.eps');
+      expect(addr).toEqual('qwery.sxt');
     });
 
     it('lookupAddress: 0xf2EA5Fd6538EAb3B0466f1b1A447C742d8b30eFe - expired', async () => {
