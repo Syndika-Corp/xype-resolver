@@ -5,6 +5,7 @@ import {
   getAddress,
   namehash,
   isError,
+  ethers,
 } from 'ethers';
 import {
   XYPE_REGISTRY_ADDRESS,
@@ -33,7 +34,10 @@ export class XypeResolver {
    * @param connection A string representing RPC URL or the JsonRpcProvider object
    * @returns New XypeResolver instance
    */
-  public static async init(connection: Web3Connection): Promise<XypeResolver> {
+  public static async init(
+    connection: Web3Connection,
+    chainId?: number
+  ): Promise<XypeResolver> {
     const provider =
       connection instanceof JsonRpcProvider
         ? connection
@@ -41,7 +45,9 @@ export class XypeResolver {
 
     // add network support check
     const xypeRegistry = new Contract(
-      XYPE_REGISTRY_ADDRESS[Number((await provider.getNetwork()).chainId)],
+      XYPE_REGISTRY_ADDRESS[
+        chainId ? chainId : Number((await provider.getNetwork()).chainId)
+      ],
       REGISTRY_ABI,
       provider
     );
