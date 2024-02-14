@@ -51,6 +51,19 @@ const addr = await xypeResolver.lookupAddress(
 ```shell
 npm run test
 ```
+## Publish package
+
+There are two supported versions of this package depending on version of ethers.js (v5 and v6):
+
+- Publish ethers-v5 version `xype-resolver@ethers-v5`:
+```shell
+npm publish --tag ethers-v5
+```
+
+- Publish ethers-v6 version `xype-resolver@latest`:
+```shell
+npm publish --tag latest
+```
 
 [build-img]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/release.yml/badge.svg
 [build-url]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/release.yml
