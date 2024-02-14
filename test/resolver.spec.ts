@@ -49,11 +49,11 @@ describe('XypeResolver', () => {
   });
 
   describe('lookupAddress', () => {
-    it('lookupAddress: 0xb305c1f2200a17E0502416B1746aB88C9B5C449f - success resolution', async () => {
+    it('lookupAddress: 0xc46DA945f66EBe2E55f49EF9e401ec9eA7C3eC61 - success resolution', async () => {
       const addr = await xypeResolver.lookupAddress(
-        '0xedFD627da84F2175276138d17d9e788651988E38'
+        '0xcefc9fcc056a8c888698b50fd88453cc66c6abc6'
       );
-      expect(addr).toEqual('str2.epsr');
+      expect(addr).toEqual('abc55.trustyfy');
     });
 
     it('lookupAddress: 0xf2EA5Fd6538EAb3B0466f1b1A447C742d8b30eFe - expired', async () => {
