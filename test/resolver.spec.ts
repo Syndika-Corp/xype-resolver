@@ -20,6 +20,12 @@ describe('XypeResolver', () => {
 
       expect((xypeResolver = await XypeResolver.init(provider)));
       expect((xypeResolver = await XypeResolver.init(PUBLIC_RPC_NODES[0])));
+      expect(
+        (xypeResolver = await XypeResolver.init(
+          provider,
+          Number((await provider.getNetwork()).chainId)
+        ))
+      );
     });
   });
 
@@ -47,9 +53,9 @@ describe('XypeResolver', () => {
   describe('lookupAddress', () => {
     it('lookupAddress: 0xb305c1f2200a17E0502416B1746aB88C9B5C449f - success resolution', async () => {
       const addr = await xypeResolver.lookupAddress(
-        '0xc46DA945f66EBe2E55f49EF9e401ec9eA7C3eC61'
+        '0xcefc9fcc056a8c888698b50fd88453cc66c6abc6'
       );
-      expect(addr).toEqual('qwery.sxt');
+      expect(addr).toEqual('abc55.trustyfy');
     });
 
     it('lookupAddress: 0xf2EA5Fd6538EAb3B0466f1b1A447C742d8b30eFe - expired', async () => {
