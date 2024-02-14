@@ -1,4 +1,4 @@
-name: Release
+name: Build
 on:
   push:
     branches:
@@ -32,10 +32,10 @@ jobs:
         run: npm run build
       - name: Test
         run: npm test
-      - name: Release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: npx semantic-release
+      # - name: Release
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #     NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+      #   run: npx semantic-release
       - name: Upload Code Coverage
         uses: codecov/codecov-action@v3.1.0
