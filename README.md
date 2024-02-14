@@ -65,8 +65,8 @@ npm publish --tag ethers-v5
 npm publish --tag latest
 ```
 
-[build-img]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/release.yml/badge.svg
-[build-url]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/release.yml
+[build-img]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/build.yml/badge.svg
+[build-url]: https://github.com/Syndika-Corp/xype-resolver/actions/workflows/build.yml
 [downloads-img]: https://img.shields.io/npm/dt/xype-resolver
 [downloads-url]: https://www.npmtrends.com/xype-resolver
 [npm-img]: https://img.shields.io/npm/v/xype-resolver/latest.svg
